@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toán 8 Tương Tác - Thầy Lê Quốc Huy</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+    <!-- Chart.js for Statistics & QRCode for Game -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" style="overflow-y: auto;">
+            <div class="logo">
+                <i class="fa-solid fa-square-root-variable"></i>
+                <h2>Math 8 <span>Tương Tác - Thầy Lê Quốc Huy </span></h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-topic="identities">
+                    <i class="fa-solid fa-layer-group"></i> Hằng đẳng thức
+                </button>
+                <button class="nav-item" data-topic="equations">
+                    <i class="fa-solid fa-scale-balanced"></i> Phương trình bậc nhất
+                </button>
+                <button class="nav-item" data-topic="functions">
+                    <i class="fa-solid fa-chart-line"></i> Hàm số bậc nhất
+                </button>
+                <button class="nav-item" data-topic="pythagoras">
+                    <i class="fa-solid fa-ruler-combined"></i> Định lý Pythagore
+                </button>
+                <button class="nav-item" data-topic="thales">
+                    <i class="fa-solid fa-ruler"></i> Định lý Thales
+                </button>
+                <button class="nav-item" data-topic="similartriangles">
+                    <i class="fa-solid fa-shapes"></i> Hình đồng dạng
+                </button>
+                <button class="nav-item" data-topic="statistics">
+                    <i class="fa-solid fa-chart-pie"></i> Thống kê
+                </button>
+                <button class="nav-item" data-topic="probability">
+                    <i class="fa-solid fa-dice"></i> Xác suất
+                </button>
+                <hr style="border: 1px solid var(--border); width: 100%;">
+                <button class="nav-item" data-topic="gamemode"
+                    style="background: linear-gradient(135deg, #10b981, #14b8a6); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                    <i class="fa-solid fa-gamepad"></i> Chế độ Game (Kiểm Tra)
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <h1 id="topic-title">Hằng đẳng thức đáng nhớ</h1>
+                <p id="topic-desc">Nhấp vào đáp án đúng để hoàn thành câu hỏi.</p>
+            </header>
+
+            <div class="exercise-area" id="exercise-area">
+                <!-- Javascript will render templates here -->
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="feedback-toast" class="toast">
+                <i class="icon fa-solid"></i>
+                <!-- TPL: Game Mode (HOST) -->
+                <template id="tpl-gamemode">
+                    <div class="card fade-in" id="host-lobby">
+                        <h3 style="text-align: center; font-size: 2rem; color: var(--primary); margin-bottom: 2rem;"><i
+                                class="fa-solid fa-chalkboard-user"></i> Cổng Thi Đấu Real-time (Màn Hình Giáo Viên)
+                        </h3>
+                        <div class="flex-layout">
+                            <div class="controls"
+                                style="flex: 1; text-align: center; border-right: 1px solid var(--border); padding-right: 2rem;">
+                                <p style="font-size: 1.2rem; font-weight: 600;">Học sinh QUÉT MÃ ở dưới bằng Zalo/Camera
+                                    để vào phòng:</p>
+                                <div id="qrcode"
+                                    style="display: flex; justify-content: center; margin: 1.5rem 0; padding: 1.5rem; background: #fff; border: 4px dashed var(--primary); border-radius: 1rem;">
+                                </div>
+                                <p>Hoặc truy cập bằng link: <br><strong id="host-ip"
+                                        style="font-size: 1.2rem; color: var(--primary);"></strong></p>
+                            </div>
+                            <div class="controls"
+                                style="flex: 1; background: #f8fafc; border-radius: 1rem; padding: 1.5rem;">
+                                <h4 style="margin-top: 0; font-size: 1.5rem;">Học sinh đã điểm danh (<span
+                                        id="player-count">0</span>):</h4>
+                                <ul id="host-player-list"
+                                    style="list-style: none; padding: 0; font-size: 1.5rem; min-height: 200px; max-height: 250px; overflow-y: auto;">
+                                    <li style="color:var(--text-muted); font-size: 1rem; font-style: italic;">Chưa có
+                                        học sinh nào...</li>
+                                </ul>
+                                <button class="btn btn-primary"
+                                    style="width: 100%; font-size: 1.5rem; padding: 1rem; background: var(--success);"
+                                    onclick="hostStartGame()"><i class="fa-solid fa-play"></i> BẮT ĐẦU GAME</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card fade-in hidden" id="host-play" style="display: none;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 1rem;">
+                            <h2 style="margin: 0;">Câu hỏi <span id="host-q-num">1</span>/10</h2>
+                            <button class="btn btn-primary" onclick="hostNextQuestion()" id="host-btn-next"
+                                style="font-size: 1.2rem;">Chuyển Sang Câu Mới <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+
+                        <div class="math-question" style="font-size: 2.5rem; margin: 2rem 0; text-align: center;">
+                            <span id="host-q-text">Mô tả</span>
+                        </div>
+
+                        <div class="game-options" id="host-options"
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        </div>
+
+                        <div style="margin-top: 3rem; background: #f8fafc; padding: 1.5rem; border-radius: 1rem;">
+                            <h4 style="margin-top: 0;">Trạng thái học sinh:</h4>
+                            <div id="host-live-status"
+                                style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 1.2rem;"></div>
+                        </div>
+                    </div>
+
+                    <div class="card fade-in hidden" id="host-result"
+                        style="display: none; text-align: center; padding: 3rem 0;">
+                        <i class="fa-solid fa-trophy" style="font-size: 6rem; color: #f59e0b; margin-bottom: 2rem;"></i>
+                        <h2 style="font-size: 3rem; color: var(--success);">KẾT QUẢ CUỘC THI</h2>
+                        <div id="leaderboard"
+                            style="font-size: 2rem; max-width: 500px; margin: 2rem auto; text-align: left;"></div>
+                        <button class="btn btn-primary mt-3"
+                            onclick="document.querySelector('[data-topic=\'gamemode\']').click()"
+                            style="font-size: 1.2rem;">Khởi Tạo Phòng Mới</button>
+                    </div>
+                </template>
+
+                <!-- Templates -->
+                <!-- Generalized Template for all topics -->
+                <template id="tpl-topic">
+                    <div class="card fade-in">
+                        <h3 id="topic-header">Chủ đề</h3>
+                        <div id="visualizer-container"
+                            style="display: none; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                        </div>
+
+                        <div class="flex-layout">
+                            <div class="controls" style="flex: 1;">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="font-weight: 600; color: var(--text-muted);">Câu <span
+                                            id="q-num">1</span>/40</span>
+                                    <span id="q-type-badge"
+                                        style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 1rem; font-size: 0.9rem;"></span>
+                                </div>
+                                <div class="math-question" style="font-size: 1.5rem; margin: 1rem 0; font-weight: 500;"
+                                    id="q-text">Mô tả</div>
+                                <div id="q-options" class="radio-options"
+                                    style="margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                </div>
+                                <div style="margin-top: 2rem;">
+                                    <button class="btn btn-primary" id="btn-submit" onclick="checkGeneralAnswer()">Chốt
+                                        Đáp Án</button>
+                                    <button class="btn" id="btn-next" onclick="nextGeneralQuestion()"
+                                        style="display: none; margin-left: 1rem; background: var(--success); color: white;">Câu
+                                        Tiếp Theo <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <script src="data.js"></script>
+                <script src="script.js"></script>
+</body>
+
+</html>
