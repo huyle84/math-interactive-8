@@ -209,10 +209,19 @@ window.nextGeneralQuestion = function() {
 // =========================================================================
 
 let gamePool = [];
-function buildGamePool() {
+function buildGamePool(topicId) {
     gamePool = [];
-    Object.values(topicData).forEach(topicArray => {
-        topicArray.forEach(q => {
+    const hk1Topics = ['expressions', 'solids', 'pythagoras', 'quadrilaterals', 'statistics'];
+    const hk2Topics = ['equations', 'functions', 'thales', 'similartriangles', 'probability'];
+    
+    let topicsToInclude = [];
+    if (topicId === 'gamemode_hk1') topicsToInclude = hk1Topics;
+    else if (topicId === 'gamemode_hk2') topicsToInclude = hk2Topics;
+    else topicsToInclude = Object.keys(topicData);
+
+    topicsToInclude.forEach(key => {
+        if (!topicData[key]) return;
+        topicData[key].forEach(q => {
             let optionsForGame = q.options;
             // Pad options for games
             if(q.type === 'fill') {
@@ -242,7 +251,7 @@ let gameSocket = null;
 let wsUrl = 'ws://' + window.location.hostname + ':8765';
 
 function initGameMode(topicId) {
-    buildGamePool();
+    buildGamePool(topicId);
     const welcomeEl = document.getElementById('game-welcome');
     if (welcomeEl) welcomeEl.style.display = 'none'; 
     document.getElementById('host-lobby').style.display = 'block';
@@ -320,21 +329,27 @@ function initGameMode(topicId) {
                  renderMath(document.getElementById('host-q-text')); renderMath(optsDiv);
                  
                  // Start Timer
-                 let timeLeft = 30;
+                 const selectedTimerVal = parseInt(document.getElementById('game-timer-select').value);
                  const timerDiv = document.getElementById('host-countdown');
-                 timerDiv.style.display = 'flex';
-                 timerDiv.textContent = timeLeft;
                  if(window.gameTimer) clearInterval(window.gameTimer);
-                 window.gameTimer = setInterval(() => {
-                     timeLeft--;
+                 
+                 if (selectedTimerVal > 0) {
+                     let timeLeft = selectedTimerVal;
+                     timerDiv.style.display = 'flex';
                      timerDiv.textContent = timeLeft;
-                     if(timeLeft <= 0) {
-                         clearInterval(window.gameTimer);
-                         timerDiv.textContent = "0";
-                         // Automatically move to the next question when time is up
-                         hostNextQuestion();
-                     }
-                 }, 1000);
+                     window.gameTimer = setInterval(() => {
+                         timeLeft--;
+                         timerDiv.textContent = timeLeft;
+                         if(timeLeft <= 0) {
+                             clearInterval(window.gameTimer);
+                             timerDiv.textContent = "0";
+                             // Automatically move to the next question when time is up
+                             hostNextQuestion();
+                         }
+                     }, 1000);
+                 } else {
+                     timerDiv.style.display = 'none';
+                 }
 
              } else if (data.type === 'gameEnded') {
                  if(window.gameTimer) clearInterval(window.gameTimer);

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toán 8 Tương Tác - Thầy Lê Quốc Huy</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=5">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,17 +35,32 @@
                 <h2>Math 8 <span>Tương Tác - Thầy Lê Quốc Huy </span></h2>
             </div>
             <nav class="nav-menu">
-                <button class="nav-item active" data-topic="identities">
-                    <i class="fa-solid fa-layer-group"></i> Hằng đẳng thức
+                <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin: 1rem 0 0.5rem 1rem; text-transform: uppercase;">Học Kỳ 1</div>
+                <button class="nav-item active" data-topic="expressions">
+                    <i class="fa-solid fa-layer-group"></i> Biểu thức đại số
                 </button>
+                <button class="nav-item" data-topic="solids">
+                    <i class="fa-solid fa-cube"></i> Các hình khối thực tiễn
+                </button>
+                <button class="nav-item" data-topic="pythagoras">
+                    <i class="fa-solid fa-ruler-combined"></i> Định lý Pythagore
+                </button>
+                <button class="nav-item" data-topic="quadrilaterals">
+                    <i class="fa-solid fa-square-full"></i> Loại tứ giác thường gặp
+                </button>
+                <button class="nav-item" data-topic="statistics">
+                    <i class="fa-solid fa-chart-pie"></i> Một số yếu tố thống kê
+                </button>
+                <button class="nav-item" data-topic="gamemode_hk1" style="background: linear-gradient(135deg, #10b981, #14b8a6); color: white; margin-top: 0.5rem; border-radius: 0.5rem;">
+                    <i class="fa-solid fa-gamepad"></i> Game Ôn Tập Học Kỳ 1
+                </button>
+
+                <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin: 1.5rem 0 0.5rem 1rem; text-transform: uppercase;">Học Kỳ 2</div>
                 <button class="nav-item" data-topic="equations">
                     <i class="fa-solid fa-scale-balanced"></i> Phương trình bậc nhất
                 </button>
                 <button class="nav-item" data-topic="functions">
                     <i class="fa-solid fa-chart-line"></i> Hàm số bậc nhất
-                </button>
-                <button class="nav-item" data-topic="pythagoras">
-                    <i class="fa-solid fa-ruler-combined"></i> Định lý Pythagore
                 </button>
                 <button class="nav-item" data-topic="thales">
                     <i class="fa-solid fa-ruler"></i> Định lý Thales
@@ -53,16 +68,11 @@
                 <button class="nav-item" data-topic="similartriangles">
                     <i class="fa-solid fa-shapes"></i> Hình đồng dạng
                 </button>
-                <button class="nav-item" data-topic="statistics">
-                    <i class="fa-solid fa-chart-pie"></i> Thống kê
-                </button>
                 <button class="nav-item" data-topic="probability">
                     <i class="fa-solid fa-dice"></i> Xác suất
                 </button>
-                <hr style="border: 1px solid var(--border); width: 100%;">
-                <button class="nav-item" data-topic="gamemode"
-                    style="background: linear-gradient(135deg, #10b981, #14b8a6); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-                    <i class="fa-solid fa-gamepad"></i> Chế độ Game (Kiểm Tra)
+                <button class="nav-item" data-topic="gamemode_hk2" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; margin-top: 0.5rem; margin-bottom: 2rem; border-radius: 0.5rem;">
+                    <i class="fa-solid fa-gamepad"></i> Game Ôn Tập Học Kỳ 2
                 </button>
             </nav>
         </aside>
@@ -81,7 +91,10 @@
             <!-- Toast Notification -->
             <div id="feedback-toast" class="toast">
                 <i class="icon fa-solid"></i>
-                <!-- TPL: Game Mode (HOST) -->
+                <span class="message"></span>
+            </div>
+
+            <!-- TPL: Game Mode (HOST) -->
                 <template id="tpl-gamemode">
                     <div class="card fade-in" id="host-lobby">
                         <h3 style="text-align: center; font-size: 2rem; color: var(--primary); margin-bottom: 2rem;"><i
@@ -107,6 +120,17 @@
                                     <li style="color:var(--text-muted); font-size: 1rem; font-style: italic;">Chưa có
                                         học sinh nào...</li>
                                 </ul>
+                                <div style="margin: 1.5rem 0; text-align: left;">
+                                    <label for="game-timer-select" style="font-weight: 600; color: var(--text);">Thời gian đếm ngược (mỗi câu):</label>
+                                    <select id="game-timer-select" style="width: 100%; padding: 0.8rem; margin-top: 0.5rem; border-radius: 0.5rem; border: 2px solid var(--border); font-size: 1.2rem; cursor: pointer;">
+                                        <option value="15">15 giây</option>
+                                        <option value="30" selected>30 giây (Mặc định)</option>
+                                        <option value="45">45 giây</option>
+                                        <option value="60">60 giây</option>
+                                        <option value="90">90 giây</option>
+                                        <option value="0">Không đếm ngược</option>
+                                    </select>
+                                </div>
                                 <button class="btn btn-primary"
                                     style="width: 100%; font-size: 1.5rem; padding: 1rem; background: var(--success);"
                                     onclick="hostStartGame()"><i class="fa-solid fa-play"></i> BẮT ĐẦU GAME</button>
@@ -117,7 +141,8 @@
                     <div class="card fade-in hidden" id="host-play" style="display: none;">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 1rem;">
-                            <h2 style="margin: 0;">Câu hỏi <span id="host-q-num">1</span>/10</h2>
+                            <h2 style="margin: 0;">Câu hỏi <span id="host-q-num">1</span>/12</h2>
+                            <div id="host-countdown" style="display: none; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background: #fee2e2; border: 3px solid #ef4444; color: #b91c1c; font-size: 1.8rem; font-weight: bold; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">30</div>
                             <button class="btn btn-primary" onclick="hostNextQuestion()" id="host-btn-next"
                                 style="font-size: 1.2rem;">Chuyển Sang Câu Mới <i
                                     class="fa-solid fa-arrow-right"></i></button>
@@ -185,8 +210,8 @@
                     </div>
                 </template>
 
-                <script src="data.js"></script>
-                <script src="script.js"></script>
+                <script src="data.js?v=5"></script>
+                <script src="script.js?v=5"></script>
 </body>
 
 </html>
