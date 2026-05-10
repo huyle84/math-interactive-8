@@ -101,9 +101,12 @@ async def handler(websocket):
                 if host_ws:
                     await host_ws.send(json.dumps({'type': 'updatePlayers', 'players': {id(ws): p for ws, p in players.items()}}))
 
+import os
+
 async def main():
-    print("WebSocket Server starting on ws://0.0.0.0:8765")
-    async with websockets.serve(handler, "0.0.0.0", 8765):
+    port = int(os.environ.get("PORT", 8080))
+    print(f"WebSocket Server starting on ws://0.0.0.0:{port}")
+    async with websockets.serve(handler, "0.0.0.0", port):
         await asyncio.Future()
 
 if __name__ == "__main__":

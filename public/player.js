@@ -1,4 +1,4 @@
-const wsUrl = 'ws://' + window.location.hostname + ':8765';
+const wsUrl = window.WS_URL || 'ws://' + window.location.hostname + ':8080';
 let socket;
 let myName = '';
 let currentQuestion = null;

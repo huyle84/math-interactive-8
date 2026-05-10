@@ -248,7 +248,7 @@ function buildGamePool(topicId) {
 }
 
 let gameSocket = null;
-let wsUrl = 'ws://' + window.location.hostname + ':8765';
+let wsUrl = window.WS_URL || 'ws://' + window.location.hostname + ':8080';
 
 function initGameMode(topicId) {
     buildGamePool(topicId);
