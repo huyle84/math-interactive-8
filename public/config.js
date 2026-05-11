@@ -4,8 +4,8 @@
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 // Cách sửa an toàn nhất để chạy được cả trên máy cá nhân và Vercel
-const currentOrigin = window.location.origin; // Nó sẽ tự lấy https://math-interactive-8.vercel.app
-const playerLink = `${currentOrigin}/player.html`;
+// const currentOrigin = window.location.origin; // Nó sẽ tự lấy https://math-interactive-8.vercel.app
+// const playerLink = `${currentOrigin}/player.html`;
 
 window.WS_URL = isLocalhost
     ? 'ws://' + window.location.hostname + ':8000'
