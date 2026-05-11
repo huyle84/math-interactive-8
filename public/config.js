@@ -8,5 +8,5 @@ const currentOrigin = window.location.origin; // Nó sẽ tự lấy https://mat
 const playerLink = `${currentOrigin}/player.html`;
 
 window.WS_URL = isLocalhost
-    ? 'ws://' + window.location.hostname + ':8080'
+    ? 'ws://' + window.location.hostname
     : 'wss://add0fede-139d-4f54-a86d-9958bcc2ead1-00-27w4vuw9sgzo7.picard.replit.dev/'; // THAY ĐỔI DÒNG NÀY KHI DEPLOY REPLIT
