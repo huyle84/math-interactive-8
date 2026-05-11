@@ -365,12 +365,8 @@ function initGameMode(topicId) {
         };
     } catch (e) { console.error("Websocket failed", e); }
 
-    //const joinUrl = `https://${window.location.hostname}/player.html`;
-    // Sửa dòng 235 thành:
-    const joinUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/player.html`;
-
-    // Hoặc nếu chỉ muốn chạy trên Vercel (luôn là https và không port):
-    // const joinUrl = `https://${window.location.hostname}/player.html`;
+    // Sử dụng URL tương đối để luôn đúng dù chạy ở thư mục gốc hay /public/
+    const joinUrl = new URL('player.html', window.location.href).href;
 
     document.getElementById('host-ip').innerHTML = joinUrl;
     const qrContainer = document.getElementById('qrcode');
