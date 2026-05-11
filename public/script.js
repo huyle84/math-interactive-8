@@ -365,7 +365,7 @@ function initGameMode(topicId) {
         };
     } catch (e) { console.error("Websocket failed", e); }
 
-    const joinUrl = `https://${window.location.hostname}/player.html`;
+    const joinUrl = `https://${window.location.hostname}:8201/player.html`;
     document.getElementById('host-ip').innerHTML = joinUrl;
     const qrContainer = document.getElementById('qrcode');
     if (qrContainer) { qrContainer.innerHTML = ''; new QRCode(qrContainer, { text: joinUrl, width: 160, height: 160 }); }

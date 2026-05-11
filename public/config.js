@@ -9,4 +9,4 @@ const playerLink = `${currentOrigin}/player.html`;
 
 window.WS_URL = isLocalhost
     ? 'ws://' + window.location.hostname
-    : 'wss://add0fede-139d-4f54-a86d-9958bcc2ead1-00-27w4vuw9sgzo7.picard.replit.dev/'; // THAY ĐỔI DÒNG NÀY KHI DEPLOY REPLIT
+    : 'wss://math-interactive-8--HuyLe130.replit.app'; // THAY ĐỔI DÒNG NÀY KHI DEPLOY REPLIT
