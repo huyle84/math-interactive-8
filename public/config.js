@@ -8,5 +8,5 @@ const currentOrigin = window.location.origin; // Nó sẽ tự lấy https://mat
 const playerLink = `${currentOrigin}/player.html`;
 
 window.WS_URL = isLocalhost
-    ? 'ws://' + window.location.hostname
+    ? 'ws://' + window.location.hostname + ':8000'
     : 'wss://a11539bf-f3eb-47fb-899a-f1445c5d24f8-00-2hl8sp6881z74.spock.replit.dev/'; // THAY ĐỔI DÒNG NÀY KHI DEPLOY REPLIT
