@@ -248,7 +248,9 @@ function buildGamePool(topicId) {
 }
 
 let gameSocket = null;
-let wsUrl = window.WS_URL || 'ws://' + window.location.hostname + ':8080';
+//let wsUrl = window.WS_URL || 'ws://' + window.location.hostname + ':8080';
+
+let wsUrl = 'wss://math-interactive-8--huyle130.replit.app'
 
 function initGameMode(topicId) {
     buildGamePool(topicId);
@@ -365,7 +367,13 @@ function initGameMode(topicId) {
         };
     } catch (e) { console.error("Websocket failed", e); }
 
-    const joinUrl = `https://${window.location.hostname}:8201/player.html`;
+    //const joinUrl = `https://${window.location.hostname}/player.html`;
+    // Sửa dòng 235 thành:
+    const joinUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/player.html`;
+
+    // Hoặc nếu chỉ muốn chạy trên Vercel (luôn là https và không port):
+    // const joinUrl = `https://${window.location.hostname}/player.html`;
+
     document.getElementById('host-ip').innerHTML = joinUrl;
     const qrContainer = document.getElementById('qrcode');
     if (qrContainer) { qrContainer.innerHTML = ''; new QRCode(qrContainer, { text: joinUrl, width: 160, height: 160 }); }
