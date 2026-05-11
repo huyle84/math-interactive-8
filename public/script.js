@@ -248,9 +248,7 @@ function buildGamePool(topicId) {
 }
 
 let gameSocket = null;
-//let wsUrl = window.WS_URL || 'ws://' + window.location.hostname + ':8080';
-
-let wsUrl = 'wss://math-interactive-8--huyle130.replit.app'
+let wsUrl = window.WS_URL || 'ws://' + window.location.hostname + ':8080';
 
 function initGameMode(topicId) {
     buildGamePool(topicId);
