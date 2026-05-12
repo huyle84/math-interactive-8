@@ -9,4 +9,4 @@ const isLocalhost = window.location.hostname === 'localhost' || window.location.
 
 window.WS_URL = isLocalhost
     ? 'ws://' + window.location.hostname + ':8080'
-    : 'wss://math-interactive-8--huyle130.replit.app'; // THAY ĐỔI DÒNG NÀY KHI DEPLOY REPLIT
+    : 'wss://a11539bf-f3eb-47fb-899a-f1445c5d24f8-00-2hl8sp6881z74.spock.replit.dev/'; // THAY ĐỔI DÒNG NÀY BẰNG URL TRÊN REPLIT CỦA BẠN
